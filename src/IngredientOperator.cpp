@@ -3,16 +3,32 @@
 #include <iostream>
 #include <thread>
 
+#include "ext1.h"
+#include "ext3.h"
+
+std::unique_ptr<IngredientOperator> IngredientOperator::Create(const std::string& name, const Ingredients& ingredients)
+{
+#if defined(EXT_1)
+	return std::make_unique<IngredientOperatorWithSpeed>(name, ingredients);
+#elif defined(EXT_3)
+	return std::make_unique<IngredientOperatorWithMistake>(name, ingredients);
+#else
+	return std::make_unique<IngredientOperator>(name, ingredients);
+#endif
+}
+
 IngredientOperator::IngredientOperator(const std::string& name, const std::vector<std::string>& ingredients)
 	: m_name(name)
 	, m_bindedIngredients(ingredients)
 {
 }
 
-void IngredientOperator::operateIngredient()
+bool IngredientOperator::operateIngredient()
 {
-	_operateIngredient();
+	const auto res = _operateIngredient();
 	cleanReceiptIngredientSlot();
+
+	return res;
 }
 
 void IngredientOperator::passReceiptIngredient(const std::string& receipt, const std::string& ingredient)
@@ -38,15 +54,15 @@ std::string IngredientOperator::name()
 	return m_name;
 }
 
-void IngredientOperator::_operateIngredient()
+bool IngredientOperator::_operateIngredient()
 {
     if (m_currentIngredient == nullptr)
-        return;
-    
-    std::cout << m_name << ": required operation time = " << m_currentIngredient->time << std::endl;
+        return true;
 
-	assert(m_currentIngredient != nullptr);
+    std::cout << m_name << ": required operation time = " << m_currentIngredient->time << std::endl;
 	std::this_thread::sleep_for(std::chrono::seconds(m_currentIngredient->time));
+
+	return true;
 }
 
 void IngredientOperator::cleanReceiptIngredientSlot()

@@ -6,6 +6,17 @@
 
 #include <iostream>
 
+#include "ext2.h"
+
+std::unique_ptr<Client> Client::Create()
+{
+#if defined(EXT_2)
+	return std::make_unique<ClientWithPick>();
+#else
+	return std::make_unique<Client>();
+#endif
+}
+
 Client::Client()
 	: PossibleWaitTime(settings::ClientPossibleWaitTime)
 {
@@ -63,7 +74,7 @@ bool Client::pickDrink(IOrderable* machine)
 
 	const auto menu = machine->getMenu();
 	m_chosenDrink = menu[rand() % menu.size()];
-	// m_chosenDrink = "fanta";
+	// m_chosenDrink = "cappuccino";
 
 	std::cout << "Chosen drink: " << m_chosenDrink << std::endl;
 

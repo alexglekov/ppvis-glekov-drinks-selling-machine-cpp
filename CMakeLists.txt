@@ -29,4 +29,14 @@ src/IngredientStorage.h
 src/IngredientOperator.h
 src/Storage.h
 src/Orderable.h
-src/ClientQueueMachineHandler.h)
+src/ClientQueueMachineHandler.h
+src/ext1.h
+src/ext1.cpp
+src/ext2.h
+src/ext2.cpp
+src/ext3.h
+src/ext3.cpp
+src/ext4.h
+src/ext4.cpp)
+
+add_definitions(-DEXT_4)

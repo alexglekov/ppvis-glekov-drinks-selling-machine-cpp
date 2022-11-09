@@ -11,7 +11,7 @@ public:
 	virtual ~IOrderable();
 
 	using Menu = std::vector<std::string>;
-	virtual Menu getMenu() const = 0;
+	virtual Menu getMenu() = 0;
 
 	virtual const Item* makeOrder(const std::string& drink) = 0;
 

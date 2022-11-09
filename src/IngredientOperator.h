@@ -7,17 +7,20 @@ class IngredientOperator
 {
 public:
 	using Ingredients = std::vector<std::string>;
+	static std::unique_ptr<IngredientOperator> Create(const std::string& name, const Ingredients& ingredients);
+
 	IngredientOperator(const std::string& name, const Ingredients& ingredients);
-	void operateIngredient();
+	bool operateIngredient();
 	void passReceiptIngredient(const std::string& receipt, const std::string& ingredient);
 
 	std::string name();
 
-private:
-	void _operateIngredient();
+protected:
+
+	virtual bool _operateIngredient();
 	void cleanReceiptIngredientSlot();
 
-private:
+protected:
 	std::string m_name;
 
 	const settings::ReceiptDesc::Ingredient* m_currentIngredient = nullptr;

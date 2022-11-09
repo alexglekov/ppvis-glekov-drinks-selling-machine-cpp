@@ -22,6 +22,8 @@ class PreCoockedDrink;
 class DrinkSellingMachine : public IOrderable
 {
 public:
+	static std::unique_ptr<DrinkSellingMachine> Create();
+
 	DrinkSellingMachine();
 	~DrinkSellingMachine() override;
 
@@ -30,7 +32,7 @@ public:
 	bool isAvailable() const override;
 	bool isPositionAvailable(const std::string& drink) const override;
 
-	Menu getMenu() const override;
+	Menu getMenu() override;
 
 private:
 	const settings::ReceiptDesc* getReceipt(const std::string& drink);
@@ -40,7 +42,7 @@ private:
 	const PreCoockedDrink* getPreReadyGood(const std::string& drink);
 
 	bool getRequiredIngredients(const settings::ReceiptDesc* receipt);
-	void triggerOperations();
+	bool triggerOperations();
 
 
 private:

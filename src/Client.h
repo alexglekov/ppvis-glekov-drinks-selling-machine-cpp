@@ -9,16 +9,18 @@ class IOrderable;
 class Client
 {
 public:
+	static std::unique_ptr<Client> Create();
+
 	Client();
 	bool orderDrink(IOrderable* machine);
 
 	const Item* receivedDrink() const;
 
-private:
-	bool pickDrink(IOrderable* machine);
+protected:
+	virtual bool pickDrink(IOrderable* machine);
 	const Item* _orderDrink(IOrderable* machine);
 
-private:
+protected:
 	std::string m_chosenDrink;
 	const Item* m_receivedDrink;
 	uint32_t m_orderTime = 0;

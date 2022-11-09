@@ -63,8 +63,10 @@ namespace settings
 				{ "coffee_beans", "bean_grinder", 3, 20 } }}
 	};
 
-	constexpr uint32_t WorkDeltaTime = 60 * CLK_TCK;
+	constexpr uint32_t WorkDeltaTime = 20 * CLK_TCK;
 	constexpr uint32_t ClientPossibleWaitTime = 30 * CLK_TCK;
 
 	constexpr uint32_t ClientGenerationDelta = 5;
+
+
 }

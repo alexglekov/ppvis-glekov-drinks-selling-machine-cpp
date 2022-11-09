@@ -6,9 +6,20 @@
 
 #include <thread>
 
+#include "ext4.h"
+
+std::unique_ptr<ClientQueueMachineHandler> ClientQueueMachineHandler::Create()
+{
+#if defined(EXT_4)
+	return std::make_unique<ClientQueueMachineHandlerWithStats>();
+#else
+		return std::make_unique<ClientQueueMachineHandler>();
+#endif
+}
+
 ClientQueueMachineHandler::ClientQueueMachineHandler()
 	: ClientGenerationDelta(settings::ClientGenerationDelta)
-	, m_machine(std::make_unique<DrinkSellingMachine>())
+	, m_machine(DrinkSellingMachine::Create())
 {
 	srand(time(0));
 }
@@ -27,5 +38,5 @@ void ClientQueueMachineHandler::run()
 
 void ClientQueueMachineHandler::createClient()
 {
-	m_client = std::make_unique<Client>();
+	m_client = Client::Create();
 }

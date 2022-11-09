@@ -2,8 +2,8 @@
 
 int main()
 {
-	auto cqm = ClientQueueMachineHandler::Create();
-	cqm->run();
+	ClientQueueMachineHandler cqm;
+	cqm.run();
 
 	return 0;
 }

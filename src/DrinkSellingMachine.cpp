@@ -5,10 +5,21 @@
 #include "PreReadyGoodsStorage.h"
 #include "Drinks.h"
 
+#include "ext4.h"
+
+std::unique_ptr<DrinkSellingMachine> DrinkSellingMachine::Create()
+{
+#if defined(EXT_4)
+	return std::make_unique<DrinkSellingMachineWithStats>();
+#else
+	return std::make_unique<DrinkSellingMachine>();
+#endif
+}
+
 DrinkSellingMachine::DrinkSellingMachine()
 {
 	for (const auto& desc : settings::Components)
-		m_components[desc.name] = std::make_unique<IngredientOperator>(desc.name, desc.ingredients);
+		m_components[desc.name] = IngredientOperator::Create(desc.name, desc.ingredients);
 
 	m_storages["ingredient_storage"] = std::make_unique<IngredientStorage>("ingredient_storage");
 	m_storages["pre_ready_goods"] = std::make_unique<PreReadyGoodsStorage>("pre_ready_goods");
@@ -29,7 +40,7 @@ bool DrinkSellingMachine::isAvailable() const
 	return clock() < m_timeStart + m_workTimeDelta;
 }
 
-DrinkSellingMachine::Menu DrinkSellingMachine::getMenu() const
+DrinkSellingMachine::Menu DrinkSellingMachine::getMenu()
 {
 	const auto& preReadyGoods = m_storages.at("pre_ready_goods")->getCurrentState();
 
@@ -71,7 +82,8 @@ const Item* DrinkSellingMachine::executeReceipt(const settings::ReceiptDesc* rec
 			m_components[reqComponent]->passReceiptIngredient(receipt->name, ingr.name);
 		}
 
-		triggerOperations();
+		if (!triggerOperations())
+			return nullptr;
 
 		return new CoockedDrink(drink);
 	}
@@ -132,10 +144,13 @@ const PreCoockedDrink* DrinkSellingMachine::getPreReadyGood(const std::string& d
 	return storage->getElement(drink, 1);
 }
 
-void DrinkSellingMachine::triggerOperations()
+bool DrinkSellingMachine::triggerOperations()
 {
 	for (auto& component : m_components)
 	{
-		component.second->operateIngredient();
+		if (!component.second->operateIngredient())
+			return false;
 	}
+
+	return true;
 }
