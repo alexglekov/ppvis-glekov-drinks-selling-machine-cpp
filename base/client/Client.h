@@ -9,8 +9,6 @@ class IOrderable;
 class Client
 {
 public:
-	static std::unique_ptr<Client> Create();
-
 	Client();
 	bool orderDrink(IOrderable* machine);
 

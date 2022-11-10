@@ -1,21 +1,10 @@
 #include "Client.h"
 
-#include "Item.h"
-#include "Orderable.h"
-#include "Settings.h"
+#include "../drink_selling_machine/goods/Item.h"
+#include "../abstract/Orderable.h"
+#include "../config/Settings.h"
 
 #include <iostream>
-
-#include "ext2.h"
-
-std::unique_ptr<Client> Client::Create()
-{
-#if defined(EXT_2)
-	return std::make_unique<ClientWithPick>();
-#else
-	return std::make_unique<Client>();
-#endif
-}
 
 Client::Client()
 	: PossibleWaitTime(settings::ClientPossibleWaitTime)

@@ -1,6 +1,6 @@
 #include "PreReadyGoodsStorage.h"
 
-#include "Settings.h"
+#include "../../config/Settings.h"
 
 PreReadyGoodsStorage::PreReadyGoodsStorage(const std::string& name)
 	: Storage(name)

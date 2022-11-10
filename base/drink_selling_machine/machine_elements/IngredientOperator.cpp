@@ -3,20 +3,6 @@
 #include <iostream>
 #include <thread>
 
-#include "ext1.h"
-#include "ext3.h"
-
-std::unique_ptr<IngredientOperator> IngredientOperator::Create(const std::string& name, const Ingredients& ingredients)
-{
-#if defined(EXT_1)
-	return std::make_unique<IngredientOperatorWithSpeed>(name, ingredients);
-#elif defined(EXT_3)
-	return std::make_unique<IngredientOperatorWithMistake>(name, ingredients);
-#else
-	return std::make_unique<IngredientOperator>(name, ingredients);
-#endif
-}
-
 IngredientOperator::IngredientOperator(const std::string& name, const std::vector<std::string>& ingredients)
 	: m_name(name)
 	, m_bindedIngredients(ingredients)

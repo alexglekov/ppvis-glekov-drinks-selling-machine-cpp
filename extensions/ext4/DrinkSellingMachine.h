@@ -1,14 +1,13 @@
 #pragma once
 
-#include "ClientQueueMachineHandler.h"
-#include "DrinkSellingMachine.h"
+#include "../../base/drink_selling_machine/DrinkSellingMachine.h"
 
 #include <string>
 #include <unordered_map>
 
 class Item;
 
-class DrinkSellingMachineWithStats : public DrinkSellingMachine
+class DrinkSellingMachineWithStats : public DrinkSellingMachine<IngredientOperator>
 {
 public:
 	Menu getMenu() override;
@@ -19,10 +18,4 @@ public:
 private:
 	std::unordered_map<std::string, size_t> m_drinkStats;
 	size_t m_clientCounter = 0;
-};
-
-class ClientQueueMachineHandlerWithStats : public ClientQueueMachineHandler
-{
-public:
-	void run() override;
 };

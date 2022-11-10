@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Client.h"
+#include "../../base/client/Client.h"
 
 class ClientWithPick : public Client
 {

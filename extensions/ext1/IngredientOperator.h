@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IngredientOperator.h"
+#include "../../base/drink_selling_machine/machine_elements/IngredientOperator.h"
 
 class IngredientOperatorWithSpeed : public IngredientOperator
 {
@@ -9,5 +9,5 @@ public:
     bool _operateIngredient() override;
 
 private:
-	const uint32_t m_speed = 1;
+	const uint32_t m_speed = 2;
 };

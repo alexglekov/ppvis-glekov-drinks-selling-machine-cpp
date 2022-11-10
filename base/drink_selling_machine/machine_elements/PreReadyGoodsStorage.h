@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Drinks.h"
+#include "../goods/Drinks.h"
 #include "Storage.h"
 
 class PreReadyGoodsStorage : public Storage

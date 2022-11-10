@@ -1,4 +1,4 @@
-#include "ext4.h"
+#include "DrinkSellingMachine.h"
 
 #include <iostream>
 
@@ -21,10 +21,4 @@ void DrinkSellingMachineWithStats::printStatistics()
 		std::cout << "Drink name: " << d.first << " amount of sold positions: " << d.second << std::endl;
 
 	std::cout << "Amount of clients: " << m_clientCounter << std::endl;
-}
-
-void ClientQueueMachineHandlerWithStats::run()
-{
-	ClientQueueMachineHandler::run();
-	static_cast<DrinkSellingMachineWithStats*>(m_machine.get())->printStatistics();
 }

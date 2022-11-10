@@ -1,7 +1,7 @@
 #include "IngredientStorage.h"
 
-#include "Ingredient.h"
-#include "Settings.h"
+#include "../goods/Ingredient.h"
+#include "../../config/Settings.h"
 
 IngredientStorage::IngredientStorage(const std::string& name)
 	: Storage(name)
